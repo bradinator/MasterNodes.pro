@@ -37,8 +37,7 @@
                     </thead>
                     <tbody>
                     @foreach ($coinList as $key => $one)
-                        <tr>
-                            <td><a href="https://{!! strtoupper($key) !!}.masternodes.pro" target="_blank"><img src="//{!! strtoupper($key) !!}.masternodes.pro/img/logo.png" width="50px"></a></td>
+                        <tr><td><a href="https://{!! strtoupper($key) !!}.masternodes.pro" target="_blank"><img src="{!! $one['logo'] !!}" width="50vw"></a></td>
                             <td><a href="https://{!! strtoupper($key) !!}.masternodes.pro" target="_blank">{!! strtoupper($key) !!}</a></td>
                             <td>{!! $one['totalMasterNodes'] !!}</td>
                             <td>${!! number_format($one['currentUSDPrice'],2,'.','') !!}</td>
@@ -55,7 +54,7 @@
                 </table>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
-                <a href="https://www.vultr.com/?ref=6877914"><img src="https://www.vultr.com/media/banner_1.png" width="728" height="90"></a>
+                <script data-cfasync=false src="//s.ato.mx/p.js#id=2194065&size=728x90"></script>
             </div>
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1"></div>

@@ -16,16 +16,20 @@ class coin extends Controller
 		$data     = null;
 		$coinList = $this->coinList();
 		foreach ($coinList as $one) {
-			$data['coinList'][$one] = json_decode(Storage::get('' . $one . '.json'), true);
+			$data['coinList'][$one['coin']] = json_decode(Storage::get('' . $one['coin'] . '.json'), true);
+			$data['coinList'][$one['coin']]['logo'] = $one['logo'];
 		}
 		return view('welcome', $data);
 	}
 
 	public function coinList()
 	{
-		$data[0] = 'ion';
-		$data[1] = 'chc';
-		$data[2] = 'pivx';
+		$data[0]['coin'] = 'ion';
+		$data[0]['logo'] = '//ion.masternodes.pro/img/logo.png';
+		$data[1]['coin'] = 'chc';
+		$data[1]['logo'] = '//chc.masternodes.pro/img/logo.png';
+		$data[2]['coin'] = 'pivx';
+		$data[2]['logo'] = 'https://raw.githubusercontent.com/PIVX-Project/Official-PIVX-Graphics/master/digital/bottom%20tag/portrait/White/White_Port.png';
 		return $data;
 	}
 
@@ -33,7 +37,7 @@ class coin extends Controller
 	{
 		$coinList = $this->coinList();
 		foreach ($coinList as $one) {
-			$this->coinApi($one);
+			$this->coinApi($one['coin']);
 		}
 	}
 
