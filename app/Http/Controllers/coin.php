@@ -37,6 +37,7 @@ class coin extends Controller
 				);
 				$contentCMC = (float)$res->getBody()->getContents();
 				$total      = $total + ($contentCMC / 100000000);
+			} elseif ($key === 'arcticcoin') {
 			} else {
 				$url       = 'http://chainz.cryptoid.info/' . $key . '/api.dws?q=ticker.btc';
 				$res       = $client->request(
@@ -95,7 +96,7 @@ class coin extends Controller
 		$coin['url']               = 'https://arcticcoin.org/';
 		$coin['logo']              = 'https://arcticcoin.org/main/images/logo.png';
 		$coin['donate']['bitcoin'] = '1MMWFtENNefjTxch1j6X3MyCEQ2u9AhZSf';
-		$coin['donate']['dash']    = 'APzt8HxZiqJCRsWJYSNFj8zXdNT4LYwDoH';
+//		$coin['donate']['arctic']    = 'APzt8HxZiqJCRsWJYSNFj8zXdNT4LYwDoH';
 		$coin['current']           = (float)$this->getBalance($coin['donate']) * $ticker['USD']['15m'];
 		$coin['need']              = 200;
 		$coin['balance']           = $coin['need'] - $coin['current'];
