@@ -16,11 +16,12 @@ class coin extends Controller
 		$data     = null;
 		$coinList = $this->coinList();
 		foreach ($coinList as $one) {
-			$data['coinList'][$one['coin']]             = json_decode(Storage::get('' . $one['coin'] . '.json'), true);
-			$data['coinList'][$one['coin']]['name']     = $one['name'];
-			$data['coinList'][$one['coin']]['roi']      = '';
-			$data['coinList'][$one['coin']]['logo']     = $one['logo'];
-			$data['coinList'][$one['coin']]['donation'] = $one['donation'];
+			if (Storage::exists('' . $one['coin'] . '.json')) {
+				$data['coinList'][$one['coin']]         = json_decode(Storage::get('' . $one['coin'] . '.json'), true);
+				$data['coinList'][$one['coin']]['name'] = $one['name'];
+				$data['coinList'][$one['coin']]['roi']  = '';
+				$data['coinList'][$one['coin']]['logo'] = $one['logo'];
+			}
 		}
 		$data['ComingSoonCoinList'] = $this->ComingSoonCoinList();
 		$data['donateCoinList']     = $this->donateCoinList();
@@ -59,21 +60,14 @@ class coin extends Controller
 
 	public function ComingSoonCoinList()
 	{
-		$coin['name'] = 'CRAVE';
-		$coin['coin'] = 'CRAVE';
-		$coin['url']  = 'https://www.craveproject.com/';
-		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/crave.png';
-		$coins[0]     = $coin;
-		$coin['name'] = 'InsaneCoin';
+		$i            = 0;
+		$coin         = [];
+		$coin['name'] = 'ONHOLD - InsaneCoin';
 		$coin['coin'] = 'INSN';
 		$coin['url']  = 'http://www.insanecoin.com/';
 		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/insanecoin-insn.png';
-		$coins[1]     = $coin;
-//		$coin['name'] = 'ExclusiveCoin';
-//		$coin['coin'] = 'EXCL';
-//		$coin['url']  = 'http://exclusivecoin.pw/';
-//		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/exclusivecoin.png';
-//		$coins[2]     = $coin;
+		$coins[$i]    = $coin;
+		$i++;
 		foreach ($coins as $one) {
 			$data[$one['coin']] = $one;
 		}
@@ -89,17 +83,6 @@ class coin extends Controller
 		$i          = 0;
 		$ticker     = json_decode($resCMCCORE->getBody()->getContents(), true);
 		// DASH COIN
-		$coin                      = [];
-		$coin['name']              = 'ExclusiveCoin';
-		$coin['coin']              = 'EXCL';
-		$coin['url']               = 'http://exclusivecoin.pw/';
-		$coin['logo']              = 'https://files.coinmarketcap.com/static/img/coins/32x32/exclusivecoin.png';
-		$coin['donate']['bitcoin'] = '1BBtbPQWt7eY8ZTAZKdUhTianxn8suJaNz';
-		$coin['current']           = (float)$this->getBalance($coin['donate']) * $ticker['USD']['15m'];
-		$coin['need']              = 200;
-		$coin['balance']           = $coin['need'] - $coin['current'];
-		$coins[$i]                 = $coin;
-		$i++;
 
 		$coin                      = [];
 		$coin['name']              = 'Crown';
@@ -168,17 +151,6 @@ class coin extends Controller
 		$coins[$i]                 = $coin;
 		$i++;
 		$coin                      = [];
-		$coin['name']              = 'MonetaryUnit';
-		$coin['coin']              = 'MUE';
-		$coin['url']               = 'http://www.monetaryunit.org/';
-		$coin['logo']              = 'https://files.coinmarketcap.com/static/img/coins/32x32/monetaryunit.png';
-		$coin['donate']['bitcoin'] = '1HAT6Q67AvoyeofkSNhwqmRu4uezhr1vq1';
-		$coin['current']           = (float)$this->getBalance($coin['donate']) * $ticker['USD']['15m'];
-		$coin['need']              = 200;
-		$coin['balance']           = $coin['need'] - $coin['current'];
-		$coins[$i]                  = $coin;
-		$i++;
-		$coin                      = [];
 		$coin['name']              = 'Coinonat';
 		$coin['coin']              = 'cxt';
 		$coin['url']               = 'http://www.coinonat.org/';
@@ -187,7 +159,7 @@ class coin extends Controller
 		$coin['current']           = (float)$this->getBalance($coin['donate']) * $ticker['USD']['15m'];
 		$coin['need']              = 200;
 		$coin['balance']           = $coin['need'] - $coin['current'];
-		$coins[$i]                  = $coin;
+		$coins[$i]                 = $coin;
 		$i++;
 		$coin                      = [];
 		$coin['name']              = 'TerraCoin';
@@ -198,7 +170,7 @@ class coin extends Controller
 		$coin['current']           = (float)$this->getBalance($coin['donate']) * $ticker['USD']['15m'];
 		$coin['need']              = 200;
 		$coin['balance']           = $coin['need'] - $coin['current'];
-		$coins[$i]                  = $coin;
+		$coins[$i]                 = $coin;
 		$i++;
 		$coin                      = [];
 		$coin['name']              = 'sib';
@@ -264,32 +236,51 @@ class coin extends Controller
 
 	public function coinList()
 	{
-		$data[0]['name']                       = 'ION';
-		$data[0]['coin']                       = 'ion';
-		$data[0]['logo']                       = '//ion.masternodes.pro/img/logo.png';
-		$data[0]['donation']['bitcoin']        = '';
-		$data[0]['donation'][$data[0]['coin']] = '';
-		$data[1]['name']                       = 'ChainCoin';
-		$data[1]['coin']                       = 'chc';
-		$data[1]['logo']                       = '//chc.masternodes.pro/img/logo.png';
-		$data[1]['donation']['bitcoin']        = '';
-		$data[1]['donation'][$data[1]['coin']] = '';
-		$data[2]['name']                       = 'PIVX';
-		$data[2]['coin']                       = 'pivx';
-		$data[2]['logo']                       = 'https://raw.githubusercontent.com/PIVX-Project/Official-PIVX-Graphics/master/digital/bottom%20tag/portrait/White/White_Port.png';
-		$data[2]['donation']['bitcoin']        = '';
-		$data[2]['donation'][$data[2]['coin']] = '';
-		$data[3]['name']                       = 'Neutron';
-		$data[3]['coin']                       = 'ntrn';
-		$data[3]['logo']                       = 'https://static.wixstatic.com/media/f2591a_f17f4b3fcbb74848b2bccf59bbeae490~mv2.png/v1/fill/w_708,h_520,al_c,lg_1/f2591a_f17f4b3fcbb74848b2bccf59bbeae490~mv2.png';
-		$data[3]['donation']['bitcoin']        = '';
-		$data[3]['donation'][$data[2]['coin']] = '';
-		$data[4]['name']                       = 'ArcticCoin';
-		$data[4]['coin']                       = 'arc';
-		$data[4]['logo']                       = 'https://files.coinmarketcap.com/static/img/coins/32x32/arcticcoin.png';
-		$data[4]['donation']['bitcoin']        = '';
-		$data[4]['donation'][$data[2]['coin']] = '';
-		return $data;
+		$i            = 0;
+		$coin['name'] = 'ION';
+		$coin['coin'] = 'ion';
+		$coin['logo'] = '//ion.masternodes.pro/img/logo.png';
+		$coins[$i]    = $coin;
+		$i++;
+		$coin['name'] = 'ChainCoin';
+		$coin['coin'] = 'chc';
+		$coin['logo'] = '//chc.masternodes.pro/img/logo.png';
+		$coins[$i]    = $coin;
+		$i++;
+		$coin['name'] = 'PIVX';
+		$coin['coin'] = 'pivx';
+		$coin['logo'] = 'https://raw.githubusercontent.com/PIVX-Project/Official-PIVX-Graphics/master/digital/bottom%20tag/portrait/White/White_Port.png';
+		$coins[$i]    = $coin;
+		$i++;
+		$coin['name'] = 'Neutron';
+		$coin['coin'] = 'ntrn';
+		$coin['logo'] = 'https://static.wixstatic.com/media/f2591a_f17f4b3fcbb74848b2bccf59bbeae490~mv2.png/v1/fill/w_708,h_520,al_c,lg_1/f2591a_f17f4b3fcbb74848b2bccf59bbeae490~mv2.png';
+		$coins[$i]    = $coin;
+		$i++;
+		$coin['name'] = 'ArcticCoin';
+		$coin['coin'] = 'arc';
+		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/arcticcoin.png';
+		$coins[$i]    = $coin;
+		$i++;
+		$coin['name'] = 'CRAVE';
+		$coin['coin'] = 'crave';
+		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/crave.png';
+		$coins[$i]    = $coin;
+		$i++;
+		$coin['name'] = 'MonetaryUnit';
+		$coin['coin'] = 'MUE';
+		$coin['url']  = 'http://www.monetaryunit.org/';
+		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/monetaryunit.png';
+		$coins[$i]    = $coin;
+		$i++;
+		$coin['name'] = 'ExclusiveCoin';
+		$coin['coin'] = 'EXCL';
+		$coin['url']  = 'http://exclusivecoin.pw/';
+		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/exclusivecoin.png';
+		$coins[$i]    = $coin;
+		$i++;
+
+		return $coins;
 	}
 
 	public function callCoinAPIS()
