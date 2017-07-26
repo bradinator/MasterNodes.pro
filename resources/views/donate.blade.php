@@ -35,71 +35,6 @@
                 </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="text-align: center;">
-                    <div class="btn-toolbar btn-group" role="toolbar">
-                        <a href="/?sort=roi&view={!! $clview !!}" type="button" class="btn btn-primary @if ($clselect === 'roi') active @endif">ROI %</a>
-                        <a href="/?sort=marketCap&view={!! $clview !!}" type="button" class="btn btn-primary @if ($clselect === 'marketCap') active @endif">Market Cap</a>
-                        <a href="/?sort=coinSupply&view={!! $clview !!}" type="button" class="btn btn-primary @if ($clselect === 'coinSupply') active @endif">Coin Supply</a>
-                        <a href="/?sort=totalMasterNodes&view={!! $clview !!}" type="button" class="btn btn-primary @if ($clselect === 'totalMasterNodes') active @endif">Total MasterNodes</a>
-                        <a href="/?sort=coinsLocked&view={!! $clview !!}" type="button" class="btn btn-primary @if ($clselect === 'coinsLocked') active @endif">Coins Locked</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="text-align: center;">
-                    <div class="btn-toolbar btn-group" role="toolbar">
-                        <a href="/?sort=dailyRev&view={!! $clview !!}" type="button" class="btn btn-primary @if ($clselect === 'dailyRev') active @endif">Daily</a>
-                        <a href="/?sort=weeklyRev&view={!! $clview !!}" type="button" class="btn btn-primary @if ($clselect === 'weeklyRev') active @endif">Weekly</a>
-                        <a href="/?sort=monthlyRev&view={!! $clview !!}" type="button" class="btn btn-primary @if ($clselect === 'monthlyRev') active @endif">Monthly</a>
-                        <a href="/?sort=yearlyRev&view={!! $clview !!}" type="button" class="btn btn-primary @if ($clselect === 'yearlyRev') active @endif">Yearly</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" style="text-align: center;">
-                    <div class="btn-toolbar btn-group" role="toolbar">
-                        <a href="/?sort={!! $clselect !!}&view=grid" type="button" class="btn btn-primary @if ($clview === 'grid') active @endif"><i class="fa fa-th" aria-hidden="true"></i></a>
-                        <a href="/?sort={!! $clselect !!}&view=list" type="button" class="btn btn-primary @if ($clview === 'list') active @endif"><i class="fa fa-bars" aria-hidden="true"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
-                @foreach ($coinList as $key => $one)
-                    @if ($clview === 'grid')
-                        @include('layout.activeGrid')
-                    @elseif($clview === 'list')
-                        @include('layout.activeList')
-                    @endif
-                @endforeach
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
-                <br><br><br>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
-                <div class="alert alert-info">Coming Soon.</div>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
-
-                @foreach ($ComingSoonCoinList as $key => $one)
-                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 align-left" style="margin-top: 20px;">
-                        <div style="border:2px solid #E4E6EB;border-radius: 10px;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;min-width:285px;">
-                            <div>
-                                <div style="float:right;width:67%;border: 0px solid #000;text-align:center;padding:5px 0px;line-height:30px;">
-                                    <div>
-                                        <span style="font-size: 18px;">
-                                            <a href="{!! $one['url'] !!}" target="_blank" style="text-decoration: none; color: rgb(66, 139, 202);">{!! $one['name'] !!} ({!! strtoupper($key) !!})</a>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div style="text-align:center;padding:5px 0px;width:33%;"><a href="{!! $one['url'] !!}" target="_blank"><img src="{!! $one['logo'] !!}" width="50vw"></a></div>
-                            </div>
-                            <div style="border-top: 1px solid #E4E6EB;text-align:center;clear:both;font-size:10px;font-style:italic;padding:5px 0;">
-                                {!! $one['notes'] !!}
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
-                <br><br><br>
-            </div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
                 <div class="alert alert-info">Help Fund Masternode Detail Site for 1 Year.</div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
@@ -124,14 +59,14 @@
                                             style="font-size: 14px; ">${!! number_format($one['current'],'2','.',',') !!}</span></div>
                             </div>
                             @foreach ($one['donate'] as $donateKey => $donateOne)
-                                <div style="border-top: 1px solid #E4E6EB;text-align:center;clear:both;font-size:10px;font-style:italic;padding:5px 0;">
-                                    {!! strtoupper($donateKey) !!} <br><br> <span style="font-size: 14px; ">
+                            <div style="border-top: 1px solid #E4E6EB;text-align:center;clear:both;font-size:10px;font-style:italic;padding:5px 0;">
+                                {!! strtoupper($donateKey) !!} <br><br> <span style="font-size: 14px; ">
                                     <a href="{!! strtoupper($donateKey) !!}:{!! $donateOne !!}" target="_blank"
                                        data-toggle="popover" data-trigger="hover" title="{!! strtoupper($donateKey) !!} address"
                                        data-html="true" data-content="<img src='https://api.qrserver.com/v1/create-qr-code/?size=150x150&data={!! $donateOne !!}' width='150'>">
                                         {!! $donateOne !!}
                                     </a></span>
-                                </div>
+                            </div>
                             @endforeach
                         </div>
                     </div>
