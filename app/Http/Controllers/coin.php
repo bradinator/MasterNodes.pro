@@ -21,20 +21,26 @@ class coin extends Controller
 		$coinList = $this->coinList();
 		foreach ($coinList as $one) {
 			if (Storage::exists('' . strtolower($one['coin']) . '.json')) {
-				$coinData                                     = json_decode(Storage::get('' . strtolower($one['coin']) . '.json'), true);
-				$data['coinList'][$one['coin']]               = $coinData;
-				$CMC                                          = json_decode(Storage::get('' . strtolower($one['coin']) . '-CMC.json'), true);
-				$data['coinList'][$one['coin']]['cmc']        = $CMC;
-				$data['coinList'][$one['coin']]['market_cap'] = $CMC['market_cap_usd'];
-				$data['coinList'][$one['coin']]['coinLocked'] = $coinData['totalMasterNodes'] * $coinData['masterNodeCoinsRequired'];
-				$data['coinList'][$one['coin']]['dailyRev']   = $coinData['income']['daily'];
-				$data['coinList'][$one['coin']]['weeklyRev']  = $coinData['income']['weekly'];
-				$data['coinList'][$one['coin']]['monthlyRev'] = $coinData['income']['monthly'];
-				$data['coinList'][$one['coin']]['yearlyRev']  = $coinData['income']['yearly'];
-				$data['coinList'][$one['coin']]['coin']       = $one['coin'];
-				$data['coinList'][$one['coin']]['name']       = $one['name'];
-				$data['coinList'][$one['coin']]['roi']        = $coinData['income']['yearly'] / number_format($coinData['currentUSDPrice'] * $coinData['masterNodeCoinsRequired'], 2, '.', '') * 100;
-				$data['coinList'][$one['coin']]['logo']       = $one['logo'];
+				$coinData                                             = json_decode(Storage::get('' . strtolower($one['coin']) . '.json'), true);
+				$data['coinList'][$one['coin']]                       = $coinData;
+				$CMC                                                  = json_decode(Storage::get('' . strtolower($one['coin']) . '-CMC.json'), true);
+				$data['coinList'][$one['coin']]['cmc']                = $CMC;
+				$data['coinList'][$one['coin']]['market_cap']         = $CMC['market_cap_usd'];
+				$data['coinList'][$one['coin']]['coin_supply']        = $CMC['available_supply'];
+				$data['coinList'][$one['coin']]['percent_change_24h'] = $CMC['percent_change_24h'];
+				$data['coinList'][$one['coin']]['coinLocked']         = $coinData['totalMasterNodes'] * $coinData['masterNodeCoinsRequired'];
+				$data['coinList'][$one['coin']]['dailyRev']           = $coinData['income']['daily'];
+				$data['coinList'][$one['coin']]['weeklyRev']          = $coinData['income']['weekly'];
+				$data['coinList'][$one['coin']]['monthlyRev']         = $coinData['income']['monthly'];
+				$data['coinList'][$one['coin']]['yearlyRev']          = $coinData['income']['yearly'];
+				$data['coinList'][$one['coin']]['coin']               = $one['coin'];
+				$data['coinList'][$one['coin']]['name']               = $one['name'];
+				$data['coinList'][$one['coin']]['roi']                = $coinData['income']['yearly'] / number_format($coinData['currentUSDPrice'] * $coinData['masterNodeCoinsRequired'], 2, '.', '') * 100;
+				$data['coinList'][$one['coin']]['logo']               = $one['logo'];
+				if (isset($one['ads'])) {
+					$data['coinList'][$one['coin']]['ads'] = $one['ads'];
+					$data['coinList'][$one['coin']]['url'] = $one['url'];
+				}
 			}
 		}
 		if ($type === 'roi') $sort = 'roi';
@@ -63,8 +69,7 @@ class coin extends Controller
 		return view('welcome', $data);
 	}
 
-	public
-	function active()
+	public function active()
 	{
 		$data     = null;
 		$coinList = $this->coinList();
@@ -87,10 +92,8 @@ class coin extends Controller
 		return view('active', $data);
 	}
 
-	public
-	function activeCoin(
-		$coin
-	) {
+	public function activeCoin($coin)
+	{
 		$data     = null;
 		$coinList = $this->coinList();
 		foreach ($coinList as $one) {
@@ -118,8 +121,7 @@ class coin extends Controller
 		return view('active', $data);
 	}
 
-	public
-	function soon()
+	public function soon()
 	{
 		$data = null;
 
@@ -127,10 +129,8 @@ class coin extends Controller
 		return view('soon', $data);
 	}
 
-	public
-	function soonCoin(
-		$coin
-	) {
+	public function soonCoin($coin)
+	{
 		$data     = null;
 		$coinList = $this->ComingSoonCoinList();
 		foreach ($coinList as $value) {
@@ -144,8 +144,7 @@ class coin extends Controller
 		return view('soon', $data);
 	}
 
-	public
-	function donate()
+	public function donate()
 	{
 		$data                   = null;
 		$data['donateCoinList'] = $this->donateCoinList();
@@ -157,10 +156,8 @@ class coin extends Controller
 		return view('donate', $data);
 	}
 
-	public
-	function donateCoin(
-		$coin
-	) {
+	public function donateCoin($coin)
+	{
 		$data     = null;
 		$coinList = $this->donateCoinList();
 		foreach ($coinList as $value) {
@@ -174,10 +171,8 @@ class coin extends Controller
 		return view('donate', $data);
 	}
 
-	public
-	function getBalance(
-		$donate
-	) {
+	public function getBalance($donate)
+	{
 		$client = new Client();
 		$total  = 0;
 		foreach ($donate as $key => $value) {
@@ -206,16 +201,15 @@ class coin extends Controller
 		return $total;
 	}
 
-	public
-	function ComingSoonCoinList()
+	public function ComingSoonCoinList()
 	{
 		$i             = 0;
 		$coin          = [];
-		$coin['name']  = 'Renos';
-		$coin['coin']  = 'RNS';
-		$coin['notes'] = 'Error on Building Wallet';
-		$coin['url']   = 'https://renoscoin.com/';
-		$coin['logo']  = 'https://files.coinmarketcap.com/static/img/coins/32x32/renos.png';
+		$coin['name']  = 'Braincoin';
+		$coin['coin']  = 'BRAIN';
+		$coin['url']   = 'https://cryptocointalk.com/topic/46137-braincoin-info-powpossoon';
+		$coin['logo']  = 'https://files.coinmarketcap.com/static/img/coins/32x32/braincoin.png';
+		$coin['notes'] = 'Spinning up Servers';
 		$coins[$i]     = $coin;
 		$i++;
 		$coin          = [];
@@ -240,16 +234,25 @@ class coin extends Controller
 		return $data;
 	}
 
-	public
-	function donateCoinList()
+	public function donateCoinList()
 	{
-		$client     = new Client();
-		$resCMCCORE = $client->request(
+		$client                    = new Client();
+		$resCMCCORE                = $client->request(
 			'GET', 'https://blockchain.info/ticker'
 		);
-		$i          = 0;
-		$ticker     = json_decode($resCMCCORE->getBody()->getContents(), true);
-		// DASH COIN
+		$i                         = 0;
+		$ticker                    = json_decode($resCMCCORE->getBody()->getContents(), true);
+		$coin                      = [];
+		$coin['name']              = 'SIBCoin';
+		$coin['coin']              = 'SIB';
+		$coin['url']               = 'http://sibcoin.org/';
+		$coin['logo']              = 'https://files.coinmarketcap.com/static/img/coins/32x32/sibcoin.png';
+		$coin['donate']['bitcoin'] = '17hJgRmBgx9tVoDW7nC42LYS7MY1D1Jva1';
+		$coin['current']           = (float)$this->getBalance($coin['donate']) * $ticker['USD']['15m'];
+		$coin['need']              = 200;
+		$coin['balance']           = $coin['need'] - $coin['current'];
+		$coins[$i]                 = $coin;
+		$i++;
 		$coin                      = [];
 		$coin['name']              = 'Crown';
 		$coin['coin']              = 'CRW';
@@ -333,86 +336,118 @@ class coin extends Controller
 		return $data;
 	}
 
-	public
-	function coinList()
+	public function coinList()
 	{
-		$i            = 0;
-		$coin['name'] = 'ION';
-		$coin['coin'] = 'ion';
-		$coin['logo'] = '//ion.masternodes.pro/img/logo.png';
-		$coins[$i]    = $coin;
+		$i               = 0;
+		$coin            = [];
+		$coin['name']    = 'ION';
+		$coin['coin']    = 'ion';
+		$coin['tagable'] = true;
+		$coin['logo']    = '//ion.masternodes.pro/img/logo.png';
+		$coins[$i]       = $coin;
 		$i++;
-		$coin['name'] = 'ChainCoin';
-		$coin['coin'] = 'chc';
-		$coin['logo'] = '//chc.masternodes.pro/img/logo.png';
-		$coins[$i]    = $coin;
+		$coin            = [];
+		$coin['name']    = 'Renos';
+		$coin['coin']    = 'RNS';
+		$coin['tagable'] = false;
+		$ads['start']    = '07/27/2017';
+		$ads['end']      = '08/28/2017';
+		$ads['cost']     = '5000RNS';
+		$ads['location'] = 'top';
+		$ads['type']     = 'list';
+		$coin['ads']     = $ads;
+		$coin['url']     = 'https://renoscoin.com/?track=MNP';
+		$coin['logo']    = 'https://files.coinmarketcap.com/static/img/coins/32x32/renos.png';
+		$coins[$i]       = $coin;
 		$i++;
-		$coin['name'] = 'PIVX';
-		$coin['coin'] = 'pivx';
-		$coin['logo'] = 'https://raw.githubusercontent.com/PIVX-Project/Official-PIVX-Graphics/master/digital/bottom%20tag/portrait/White/White_Port.png';
-		$coins[$i]    = $coin;
+		$coin            = [];
+		$coin['name']    = 'ChainCoin';
+		$coin['coin']    = 'chc';
+		$coin['tagable'] = false;
+		$coin['logo']    = '//chc.masternodes.pro/img/logo.png';
+		$coins[$i]       = $coin;
 		$i++;
-		$coin['name'] = 'Neutron';
-		$coin['coin'] = 'ntrn';
-		$coin['logo'] = 'https://static.wixstatic.com/media/f2591a_f17f4b3fcbb74848b2bccf59bbeae490~mv2.png/v1/fill/w_708,h_520,al_c,lg_1/f2591a_f17f4b3fcbb74848b2bccf59bbeae490~mv2.png';
-		$coins[$i]    = $coin;
+		$coin            = [];
+		$coin['name']    = 'PIVX';
+		$coin['coin']    = 'pivx';
+		$coin['tagable'] = false;
+		$coin['logo']    = 'https://raw.githubusercontent.com/PIVX-Project/Official-PIVX-Graphics/master/digital/bottom%20tag/portrait/White/White_Port.png';
+		$coins[$i]       = $coin;
 		$i++;
-		$coin['name'] = 'ArcticCoin';
-		$coin['coin'] = 'arc';
-		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/arcticcoin.png';
-		$coins[$i]    = $coin;
+		$coin            = [];
+		$coin['name']    = 'Neutron';
+		$coin['coin']    = 'ntrn';
+		$coin['tagable'] = false;
+		$coin['logo']    = 'https://static.wixstatic.com/media/f2591a_f17f4b3fcbb74848b2bccf59bbeae490~mv2.png/v1/fill/w_708,h_520,al_c,lg_1/f2591a_f17f4b3fcbb74848b2bccf59bbeae490~mv2.png';
+		$coins[$i]       = $coin;
 		$i++;
-		$coin['name'] = 'CRAVE';
-		$coin['coin'] = 'crave';
-		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/crave.png';
-		$coins[$i]    = $coin;
+		$coin            = [];
+		$coin['name']    = 'ArcticCoin';
+		$coin['coin']    = 'arc';
+		$coin['tagable'] = false;
+		$coin['logo']    = 'https://files.coinmarketcap.com/static/img/coins/32x32/arcticcoin.png';
+		$coins[$i]       = $coin;
 		$i++;
-		$coin['name'] = 'MonetaryUnit';
-		$coin['coin'] = 'MUE';
-		$coin['url']  = 'http://www.monetaryunit.org/';
-		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/monetaryunit.png';
-		$coins[$i]    = $coin;
+		$coin            = [];
+		$coin['name']    = 'CRAVE';
+		$coin['coin']    = 'crave';
+		$coin['tagable'] = false;
+		$coin['logo']    = 'https://files.coinmarketcap.com/static/img/coins/32x32/crave.png';
+		$coins[$i]       = $coin;
 		$i++;
-		$coin['name'] = 'ExclusiveCoin';
-		$coin['coin'] = 'EXCL';
-		$coin['url']  = 'http://exclusivecoin.pw/';
-		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/exclusivecoin.png';
-		$coins[$i]    = $coin;
+		$coin            = [];
+		$coin['name']    = 'MonetaryUnit';
+		$coin['coin']    = 'MUE';
+		$coin['tagable'] = false;
+		$coin['url']     = 'http://www.monetaryunit.org/';
+		$coin['logo']    = 'https://files.coinmarketcap.com/static/img/coins/32x32/monetaryunit.png';
+		$coins[$i]       = $coin;
 		$i++;
-		$coin         = [];
-		$coin['name'] = 'DASH';
-		$coin['coin'] = 'DASH';
-		$coin['url']  = 'https://www.dash.org/';
-		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/dash.png';
-		$coins[$i]    = $coin;
+		$coin            = [];
+		$coin['name']    = 'ExclusiveCoin';
+		$coin['coin']    = 'EXCL';
+		$coin['tagable'] = false;
+		$coin['url']     = 'http://exclusivecoin.pw/';
+		$coin['logo']    = 'https://files.coinmarketcap.com/static/img/coins/32x32/exclusivecoin.png';
+		$coins[$i]       = $coin;
 		$i++;
-		$coin         = [];
-		$coin['name'] = 'Syndicate';
-		$coin['coin'] = 'SYNX';
-		$coin['url']  = 'http://syndicatelabs.io/';
-		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/syndicate.png';
-		$coins[$i]    = $coin;
+		$coin            = [];
+		$coin['name']    = 'DASH';
+		$coin['coin']    = 'DASH';
+		$coin['tagable'] = false;
+		$coin['url']     = 'https://www.dash.org/';
+		$coin['logo']    = 'https://files.coinmarketcap.com/static/img/coins/32x32/dash.png';
+		$coins[$i]       = $coin;
 		$i++;
-		$coin         = [];
-		$coin['name'] = 'Eternity';
-		$coin['coin'] = 'ent';
-		$coin['url']  = 'http://ent.eternity-group.org/';
-		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/eternity.png';
-		$coins[$i]    = $coin;
+		$coin            = [];
+		$coin['name']    = 'Syndicate';
+		$coin['coin']    = 'SYNX';
+		$coin['tagable'] = false;
+		$coin['url']     = 'http://syndicatelabs.io/';
+		$coin['logo']    = 'https://files.coinmarketcap.com/static/img/coins/32x32/syndicate.png';
+		$coins[$i]       = $coin;
 		$i++;
-		$coin         = [];
-		$coin['name'] = 'Bitsend';
-		$coin['coin'] = 'bsd';
-		$coin['url']  = 'http://www.bitsend.info/';
-		$coin['logo'] = 'https://files.coinmarketcap.com/static/img/coins/32x32/bitsend.png';
-		$coins[$i]    = $coin;
+		$coin            = [];
+		$coin['name']    = 'Eternity';
+		$coin['coin']    = 'ent';
+		$coin['tagable'] = false;
+		$coin['url']     = 'http://ent.eternity-group.org/';
+		$coin['logo']    = 'https://files.coinmarketcap.com/static/img/coins/32x32/eternity.png';
+		$coins[$i]       = $coin;
+		$i++;
+		$coin            = [];
+		$coin['name']    = 'Bitsend';
+		$coin['coin']    = 'bsd';
+		$coin['tagable'] = false;
+		$coin['url']     = 'http://www.bitsend.info/';
+		$coin['logo']    = 'https://files.coinmarketcap.com/static/img/coins/32x32/bitsend.png';
+		$coins[$i]       = $coin;
 		$i++;
 
 		return $coins;
 	}
 
-	public
-	function callCoinAPIS()
+	public function callCoinAPIS()
 	{
 		$this->CallCoinMarketCap();
 		$coinList = $this->coinList();
@@ -421,10 +456,8 @@ class coin extends Controller
 		}
 	}
 
-	public
-	function coinApi(
-		$name
-	) {
+	public function coinApi($name)
+	{
 		$client  = new Client();
 		$res     = $client->request(
 			'GET', 'http://' . strtolower($name) . '.masternodes.pro/api/datapack'
@@ -434,15 +467,12 @@ class coin extends Controller
 		Storage::put('' . strtolower($name) . '.json', $content);
 	}
 
-	public
-	function GetPrice(
-		$coin
-	) {
+	public function GetPrice($coin)
+	{
 		return Storage::get('' . strtolower($coin) . '-CMC.json');
 	}
 
-	public
-	function CallCoinMarketCap()
+	public function CallCoinMarketCap()
 	{
 		$client     = new Client();
 		$resCMCCORE = $client->request(

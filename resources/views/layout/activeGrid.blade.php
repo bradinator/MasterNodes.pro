@@ -9,6 +9,8 @@
                 </div>
                 <div>
                     <span style="font-size: 16px;">${!! number_format($one['currentUSDPrice'],2,'.','') !!} USD</span>
+                    <span style="font-size: 16px; font-weight: bold; color: @if($one['cmc']['percent_change_24h'] > 0) #009933 @else #D44836 @endif">({!! number_format($one['cmc']['percent_change_24h'],2,'.','') !!}%)</span>
+
                 </div>
             </div>
             <div style="text-align:center;padding:5px 0px;width:33%;"><a href="https://{!! strtoupper($one['coin']) !!}.masternodes.pro" target="_blank"><img src="{!! $one['logo'] !!}" width="50vw"></a></div>
@@ -29,8 +31,7 @@
             <div style="text-align:center;float:left;width:34%;font-size:12px;padding:12px 0 16px 0;border-right:1px solid #E4E6EB;line-height:1.25em;"> Node Worth <br><br> <span
                         style="font-size: 14px; ">${!! number_format($one['currentUSDPrice'] * $one['masterNodeCoinsRequired'],2,'.','') !!}</span></div>
             <div style="text-align:center;float:left;width:33%;font-size:12px;padding:12px 0 16px 0;border-right:1px solid #E4E6EB;line-height:1.25em;">
-                ROI % <br><br> <span
-                        style="font-size: 14px; ">{!!  number_format($one['roi'],2,'.','') !!}%</span>
+                ROI % <Br><br><span style="font-size: 20px; color: #FCB043">{!!  number_format($one['roi'],2,'.','') !!}%</span>
             </div>
         </div>
         <div style="border-top: 1px solid #E4E6EB;clear:both;">

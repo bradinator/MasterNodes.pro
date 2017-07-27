@@ -17,12 +17,20 @@
         <div class="col-lg-1 hidden-md hidden-sm hidden-xs"></div>
     </div>
     <div class="row" style="margin-top: 50px;">
-        <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" style="text-align: center;">
+        <div class="col-lg-2 col-md-2 hidden-sm hidden-xs" style="text-align: center;"><a href="https://www.vultr.com/?ref=6877914"><span style="font-size: 16px">Best VPS Hosting<br>for Masternodes</span><br><img src="https://www.vultr.com/media/banner_4.png" width="160" height="600"></a></div>
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12" style="text-align: center;">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
                 <div class="row">
-                    <div class="span4"></div>
-                    <div class="span4"><a href="https://www.vultr.com/?ref=6877914"><span style="font-size: 16px">Best VPS Hosting for Masternodes</span><br><img src="https://www.vultr.com/media/banner_1.png" class="img-responsive center-block"></a></div>
-                    <div class="span4"></div>
+                    <div class="col-lg-2 col-md-2 hidden-sm hidden-xs"></div>
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        @foreach ($coinList as $key => $one)
+                            @if(isset($one['ads']) && isset($one['ads']['location']) && $one['ads']['location'] === 'top')
+                                @if ($one['ads']['start'] <= date("m/d/Y") && $one['ads']['end'] >= date("m/d/Y") && $one['ads']['type'] === 'list')
+                                    @include('layout.adsTopList')
+                                @endif
+                            @endif
+                        @endforeach</div>
+                    <div class="col-lg-2 col-md-2 hidden-sm hidden-xs"></div>
                 </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
@@ -141,15 +149,18 @@
                 <br><br><br>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="text-align: center;">
-                <script data-cfasync=false src="//s.ato.mx/p.js#id=2194065&size=728x90"></script>
+                <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12"  style="text-align: center;">
+                    <script data-cfasync=false src="//s.ato.mx/p.js#id=2194065&size=728x90"></script>
+                </div>
+                <div class="col-lg-4 col-md-4 hidden-sm hidden-xs" style="text-align: center;">
+                    <div class="col-lg-12 col-md-12 col-sm-9 col-xs-9" style="text-align: center;">
+                        <a class="twitter-timeline" data-height="250" data-theme="dark" data-link-color="#000000" href="https://twitter.com/MasterNodesPro">Tweets by MasterNodesPro</a>
+                        <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" style="text-align: center;">
-            <div class="col-lg-12 col-md-12 col-sm-9 col-xs-9" style="text-align: center;">
-                <a class="twitter-timeline" href="https://twitter.com/MasterNodesPro">Tweets by MasterNodesPro</a>
-                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-            </div>
-        </div>
+        <div class="col-lg-2 col-md-2 hidden-sm hidden-xs" style="text-align: center;"><a href="https://www.vultr.com/?ref=6877914"><span style="font-size: 16px">Best VPS Hosting<br>for Masternodes</span><br><img src="https://www.vultr.com/media/banner_4.png" width="160" height="600"></a></div>
     </div>
     @include('layout.footer')
     <div class="modal fade" id="mainModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
