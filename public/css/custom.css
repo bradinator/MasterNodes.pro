@@ -233,6 +233,37 @@ table.display tbody tr:hover td {
   padding-left: 0;
   padding-right: 0;
 }
+.coinbox-inner{
+  border:2px solid #E4E6EB;
+  border-radius: 10px;
+  font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+.coin-supply{
+  border-top: 1px solid #E4E6EB;
+  text-align:center;
+  clear:both;
+  font-size:10px;
+  font-style:italic;
+  padding:5px 0;
+}
+.coin-box-row{
+  border-top: 1px solid #E4E6EB;
+  clear:both;
+  font-size: 12px;
+}
+.coin-box-row > div{
+  padding:12px 0 16px 0;
+  border-right:1px solid #E4E6EB;
+  line-height:1.25em;
+
+}
+.coin-box-row > div:last-of-type{
+  border-right:none;
+}
+.coin-box-row > span{
+  font-size: 14px;
+} 
+
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 750px) {
 
